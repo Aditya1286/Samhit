@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import Bb from "./component/Bb.jsx";
+import Cc from "./component/Cc.jsx";
 import './App.css';
 const questions = [
   { id: 1, question: "Over the past two weeks, how often have you felt down, depressed, or hopeless?", options: [{ text: "Not at all", score: 0 }, { text: "Several days", score: 1 }, { text: "More than half the days", score: 2 }, { text: "Nearly every day", score: 3 }] },
@@ -112,6 +113,7 @@ const PrivacySection = () => (
     </div>
   </div>
   <Bb/>
+  <Cc/>
   </div>
 );
 
