@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
+import Bb from "./component/Bb.jsx";
 import './App.css';
-
 const questions = [
   { id: 1, question: "Over the past two weeks, how often have you felt down, depressed, or hopeless?", options: [{ text: "Not at all", score: 0 }, { text: "Several days", score: 1 }, { text: "More than half the days", score: 2 }, { text: "Nearly every day", score: 3 }] },
   { id: 2, question: "How often have you had little interest or pleasure in doing things?", options: [{ text: "Not at all", score: 0 }, { text: "Several days", score: 1 }, { text: "More than half the days", score: 2 }, { text: "Nearly every day", score: 3 }] },
@@ -86,6 +86,7 @@ const StatsSection = () => (
 );
 
 const PrivacySection = () => (
+  <div>
   <div className="bg-gray-900/50 border border-gray-700 rounded-2xl p-6 sm:p-8 mb-12 sm:mb-16">
     <div className="text-center mb-6">
       <i className="fas fa-shield-alt text-3xl sm:text-4xl text-green-400 mb-4"></i>
@@ -109,6 +110,8 @@ const PrivacySection = () => (
         <p className="text-xs sm:text-sm text-gray-400">Session data is automatically cleared after completion</p>
       </div>
     </div>
+  </div>
+  <Bb/>
   </div>
 );
 
