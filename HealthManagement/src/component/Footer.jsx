@@ -27,10 +27,10 @@ const Footer = () => {
   );
 
   return (
-    <footer className="relative w-full min-h-screen flex items-center justify-center" style={{
+    <footer className="relative w-full min-h-screen flex items-center justify-center py-8 sm:py-12" style={{
       background: '#000000'
     }}>
-      {/* Grid background - updated to fade from all sides */}
+      {/* Grid background - larger size with edge fade */}
       <div
         className="absolute inset-0 opacity-20"
         style={{
@@ -38,27 +38,37 @@ const Footer = () => {
             linear-gradient(white 1px, transparent 1px),
             linear-gradient(90deg, white 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px',
-          maskImage: 'radial-gradient(ellipse, black 0%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse, black 0%, transparent 100%)'
+          backgroundSize: '80px 80px',
+          maskImage: `
+            linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+            linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)
+          `,
+          WebkitMaskImage: `
+            linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+            linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)
+          `,
+          maskComposite: 'intersect',
+          WebkitMaskComposite: 'source-in'
         }}
       />
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-8">
-        {/* Main content - centered */}
-        <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main content - responsive text and spacing */}
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight px-2">
             Ready to take your mental well-being
-            <br />
-            <span style={{ color: 'orange' }}>to the next level?</span>
+            <br className="hidden sm:block" />
+            <span className="sm:inline block mt-2 sm:mt-0" style={{ color: 'orange' }}>
+              to the next level?
+            </span>
           </h1>
 
-          <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+          <p className="text-gray-400 text-base sm:text-lg mb-8 sm:mb-10 lg:mb-12 max-w-2xl mx-auto px-4">
             Reach out to me today and let's discuss how I can help you achieve your goals.
           </p>
 
           <button
-            className="inline-flex items-center px-8 py-3 text-white font-medium rounded-md border border-gray-600 hover:bg-gray-700 transition-colors duration-200"
+            className="inline-flex items-center px-6 sm:px-8 py-3 text-white font-medium rounded-md border border-gray-600 hover:bg-gray-700 transition-colors duration-200 text-sm sm:text-base"
             style={{ backgroundColor: 'black' }}
           >
             Let's get in touch
@@ -66,25 +76,25 @@ const Footer = () => {
           </button>
         </div>
 
-        {/* Footer bottom - exact positioning */}
-        <div className="flex justify-between items-center">
-          <p className="text-gray-400 text-sm">
+        {/* Footer bottom - responsive layout */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+          <p className="text-gray-400 text-xs sm:text-sm order-2 sm:order-1">
             Copyright © 2025 Aditya Aishwarya
           </p>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 order-1 sm:order-2">
             {socialMedia.map((social) => (
               <a
                 key={social.id}
                 href={social.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-800 border border-gray-700 hover:bg-gray-700 transition-colors duration-200"
+                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-md bg-gray-800 border border-gray-700 hover:bg-gray-700 transition-colors duration-200"
               >
                 <img
                   src={social.img}
                   alt="social"
-                  className="w-4 h-4"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                 />
               </a>
             ))}
