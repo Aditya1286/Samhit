@@ -36,7 +36,7 @@ const Navbar = () => (
         <div className="flex items-center">
           <h1 className="text-xl sm:text-2xl font-bold gradient-text">SAMहित</h1>
         </div>
-        <div className="hidden md:flex space-x-4 md:space-x-8">
+        <div className="sm:hidden hidden md:flex space-x-4 md:space-x-8">
           <a href="#" className="text-white hover:text-orange-400 transition-colors">Overview</a>
           <a href="#" className="text-white hover:text-orange-400 transition-colors">Features</a>
           <a href="#" className="text-white hover:text-orange-400 transition-colors">Insights</a>
