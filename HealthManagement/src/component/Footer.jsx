@@ -1,5 +1,4 @@
 import React from 'react';
-
 const Footer = () => {
   // Social media data matching the icons in the image
   const socialMedia = [
@@ -27,6 +26,7 @@ const Footer = () => {
   );
 
   return (
+    <div>
     <footer className="relative w-full min-h-screen flex items-center justify-center py-8 sm:py-12" style={{
       background: '#000000'
     }}>
@@ -102,6 +102,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </div>
   );
 };
 
