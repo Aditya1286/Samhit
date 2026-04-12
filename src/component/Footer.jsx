@@ -27,7 +27,7 @@ const Footer = () => {
 
   return (
     <div>
-    <footer className="relative w-full min-h-screen flex items-center justify-center py-8 sm:py-12" style={{
+    <footer id="footer" className="relative w-full min-h-screen flex items-center justify-center py-8 sm:py-12" style={{
       background: '#000000'
     }}>
       {/* Grid background - larger size with edge fade */}
