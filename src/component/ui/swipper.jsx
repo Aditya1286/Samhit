@@ -1,5 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useTranslation } from "react-i18next";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -35,6 +36,7 @@ export const CardCarousel = ({
   showPagination = true,
   showNavigation = true,
 }) => {
+  const { t } = useTranslation();
   const css = `
   .swiper {
     width: 100%;
@@ -148,9 +150,9 @@ export const CardCarousel = ({
             <div className="flex gap-2">
               <div>
                 <h3 className="text-4xl opacity-85 font-bold tracking-tight">
-                  Wellness Journey
+                  {t('swiper.title')}
                 </h3>
-                <p>Understanding What You're Going Through</p>
+                <p>{t('swiper.subtitle')}</p>
               </div>
             </div>
           </div>

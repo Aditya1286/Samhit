@@ -1,5 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 const Footer = () => {
+  const { t } = useTranslation();
   // Social media data matching the icons in the image
   const socialMedia = [
     {
@@ -56,22 +59,22 @@ const Footer = () => {
         {/* Main content - responsive text and spacing */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight px-2">
-            Ready to take your mental well-being
+            {t('footer.title1')}
             <br className="hidden sm:block" />
             <span className="sm:inline block mt-2 sm:mt-0" style={{ color: 'orange' }}>
-              to the next level?
+              {t('footer.title2')}
             </span>
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg mb-8 sm:mb-10 lg:mb-12 max-w-2xl mx-auto px-4">
-            Reach out to me today and let's discuss how I can help you achieve your goals.
+            {t('footer.subtitle')}
           </p>
 
           <button
             className="inline-flex items-center px-6 sm:px-8 py-3 text-white font-medium rounded-md border border-gray-600 hover:bg-gray-700 transition-colors duration-200 text-sm sm:text-base"
             style={{ backgroundColor: 'black' }}
           >
-            Let's get in touch
+            {t('footer.button')}
             <ArrowIcon />
           </button>
         </div>
@@ -79,7 +82,7 @@ const Footer = () => {
         {/* Footer bottom - responsive layout */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
           <p className="text-gray-400 text-xs sm:text-sm order-2 sm:order-1">
-            Copyright © 2025 Aditya Aishwarya
+            {t('footer.copyright')}
           </p>
 
           <div className="flex gap-3 order-1 sm:order-2">

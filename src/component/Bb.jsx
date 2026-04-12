@@ -1,5 +1,6 @@
 import React from "react";
 import { HoverExpand } from "./ui/Hover-expand";
+import { useTranslation } from "react-i18next";
 
 const images = [
   "https://images.pexels.com/photos/30082445/pexels-photo-30082445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -13,15 +14,16 @@ const images = [
 ];
 
 function MouseTrailDemo() {
+  const { t } = useTranslation();
   return (
     <section className="mx-auto w-full max-w-6xl py-20">
       <div className="relative mx-auto flex w-full flex-col items-center justify-center">
         <article className="relative z-50 mt-20 flex flex-col items-center justify-center">
           <h2 className="max-w-2xl text-center text-5xl font-semibold tracking-tight text-white mb-4">
-            Your Mental Health <span className="text-orange-400">Matters</span> 
+            {t('bb.title1')} <span className="text-orange-400">{t('bb.title2')}</span> 
           </h2>
           <p className="mt-6 text-lg text-gray-400 text-center max-w-xl">
-            Mental health screening isn't just about identifying problems—it's about recognizing resilience, understanding individual strengths, and building personalized pathways to wellness that honor each person's unique journey toward emotional stability and growth
+            {t('bb.subtitle')}
           </p>
         </article>
         <HoverExpand

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import { fetchAssessmentQuestions } from '../lib/api';
+import { useTranslation } from 'react-i18next';
 
 const QuizContainer = ({ questions, currentQuestion, answers, selectAnswer, setCurrentQuestion }) => {
+  const { t } = useTranslation();
   const question = questions[currentQuestion];
   const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
 
@@ -10,8 +12,8 @@ const QuizContainer = ({ questions, currentQuestion, answers, selectAnswer, setC
     <div>
       <div className="mb-6 sm:mb-8">
         <div className="flex justify-between items-center mb-3">
-          <span className="text-xs sm:text-sm text-gray-400">Progress</span>
-          <span className="text-xs sm:text-sm text-gray-400">{currentQuestion + 1} of {questions.length}</span>
+          <span className="text-xs sm:text-sm text-gray-400">{t('assessment.progress')}</span>
+          <span className="text-xs sm:text-sm text-gray-400">{currentQuestion + 1} {t('assessment.of')} {questions.length}</span>
         </div>
         <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
           <div className="progress-bar h-2 rounded-full" style={{ width: `${progressPercentage}%` }}></div>
@@ -19,14 +21,14 @@ const QuizContainer = ({ questions, currentQuestion, answers, selectAnswer, setC
       </div>
       <div className="card-hover bg-gray-900 rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 fade-in text-center relative overflow-hidden border border-gray-800/50 shadow-2xl shadow-black">
         {question.type === 'puzzle' && (
-           <div className="mb-4 inline-flex items-center px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-widest"><i className="fas fa-brain mr-2"></i>Cognitive Test</div>
+           <div className="mb-4 inline-flex items-center px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold uppercase tracking-widest"><i className="fas fa-brain mr-2"></i>{t('assessment.cognitive_test')}</div>
         )}
         {question.imageUrl && (
            <div className="mb-6 rounded-xl overflow-hidden shadow-black shadow-inner">
               <img src={question.imageUrl} alt="Assessment visual" className="w-full h-48 md:h-64 object-cover hover:scale-105 transition-transform duration-700" />
            </div>
         )}
-        <h2 className={`text-xl sm:text-2xl font-semibold ${question.imageUrl ? 'mt-4' : 'mt-2'} mb-8 text-white leading-relaxed`}>{question.question}</h2>
+        <h2 className={`text-xl sm:text-2xl font-semibold ${question.imageUrl ? 'mt-4' : 'mt-2'} mb-8 text-white leading-relaxed`}>{t(`api_questions.q${question.id}.question`, { defaultValue: question.question })}</h2>
         
         <div className="space-y-3 sm:space-y-4 text-left">
           {question.options.map((option, index) => {
@@ -41,7 +43,7 @@ const QuizContainer = ({ questions, currentQuestion, answers, selectAnswer, setC
                   <div className={`w-5 h-5 border-2 ${isSelected ? 'border-orange-500' : 'border-gray-600'} rounded-full mr-4 flex-shrink-0 relative flex items-center justify-center transition-colors`}>
                     {isSelected && <div className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></div>}
                   </div>
-                  <span className={`${isSelected ? 'text-white' : 'text-gray-300'} text-sm sm:text-base font-medium`}>{option.text}</span>
+                  <span className={`${isSelected ? 'text-white' : 'text-gray-300'} text-sm sm:text-base font-medium`}>{t(`api_questions.q${question.id}.options.${index}`, { defaultValue: option.text })}</span>
                 </div>
               </button>
             );
@@ -54,11 +56,11 @@ const QuizContainer = ({ questions, currentQuestion, answers, selectAnswer, setC
           className="text-gray-400 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center font-medium px-4 py-2"
           disabled={currentQuestion === 0}
         >
-          <i className="fas fa-arrow-left mr-2"></i> Previous Step
+          <i className="fas fa-arrow-left mr-2"></i> {t('assessment.previous_step')}
         </button>
         <div className="text-xs sm:text-sm text-gray-500 flex items-center bg-gray-900/50 px-4 py-2 rounded-full border border-gray-800">
           <i className="fas fa-shield-check mr-2 text-green-500/70"></i>
-          Encryption Active: Local Processing Only
+          {t('assessment.encryption_active')}
         </div>
       </div>
     </div>
@@ -71,6 +73,7 @@ const ResultsSection = ({ algorithmResults, resultData, resetQuiz }) => {
   }, []);
 
   const { categoryScores, overallPercentage } = algorithmResults;
+  const { t } = useTranslation();
 
   const downloadResults = () => {
     const doc = new jsPDF();
@@ -131,29 +134,29 @@ const ResultsSection = ({ algorithmResults, resultData, resetQuiz }) => {
   return (
     <div className="fade-in">
       <div className="text-center mb-8 sm:mb-12">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">Assessment Results</h2>
-        <p className="text-lg sm:text-xl text-gray-400">Advanced Algorithmic Analysis Complete</p>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">{t('assessment.results_title')}</h2>
+        <p className="text-lg sm:text-xl text-gray-400">{t('assessment.results_subtitle')}</p>
       </div>
       <div className={`result-card rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 border ${resultData.borderClass} ${resultData.className} bg-gray-900/40 backdrop-blur-md shadow-2xl`}>
         <div className="flex items-center mb-6 pb-6 border-b border-gray-800">
           <div className={`${resultData.icon} text-4xl sm:text-5xl mr-5`}></div>
           <div>
             <h3 className="text-2xl sm:text-3xl font-bold mb-1 text-white tracking-tight">{resultData.level}</h3>
-            <p className="text-sm sm:text-base text-gray-400 font-medium">Risk Index: {overallPercentage.toFixed(1)}%</p>
+            <p className="text-sm sm:text-base text-gray-400 font-medium">{t('assessment.risk_index')}: {overallPercentage.toFixed(1)}%</p>
           </div>
         </div>
         <p className="text-base sm:text-lg mb-8 text-gray-300 leading-relaxed font-medium">{resultData.message}</p>
         <div className="bg-black/60 rounded-xl p-5 sm:p-6 mb-6 border border-gray-800/80">
           <h4 className="font-semibold text-white mb-3 text-sm sm:text-base flex items-center">
             <i className="fas fa-lightbulb mr-3 text-orange-400 text-lg"></i>
-            Personalized Recommendation:
+            {t('assessment.recommendation')}
           </h4>
           <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{resultData.recommendation}</p>
         </div>
         <div className="bg-black/40 rounded-xl p-5 sm:p-6 mb-6 border border-gray-800/60">
           <h4 className="font-semibold text-white mb-5 text-sm sm:text-base flex items-center">
             <i className="fas fa-project-diagram mr-3 text-blue-400 text-lg"></i>
-            Symptom Cluster Analysis:
+            {t('assessment.cluster_analysis')}
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {Object.entries(categoryScores).map(([category, data]) => {
@@ -181,21 +184,21 @@ const ResultsSection = ({ algorithmResults, resultData, resetQuiz }) => {
       <div className="bg-blue-900/20 border border-blue-900/50 rounded-xl p-5 sm:p-6 mb-6 sm:mb-8 backdrop-blur-sm">
         <h4 className="font-semibold text-blue-400 mb-3 text-sm flex items-center tracking-wide uppercase">
           <i className="fas fa-info-circle mr-2"></i>
-          Clinical Disclaimer
+          {t('assessment.clinical_disclaimer_title')}
         </h4>
         <p className="text-blue-200/70 text-xs sm:text-sm leading-relaxed">
-          This digital assessment utilizes proven markers but is strictly for informational purposes. It does not replace clinical diagnosis. If you are experiencing thoughts of self-harm, please utilize the crisis resources immediately.
+          {t('assessment.clinical_disclaimer_desc')}
         </p>
       </div>
       <div className="text-center space-y-5">
         <button onClick={resetQuiz} className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 w-full sm:w-auto px-8 py-4 rounded-full text-white font-bold text-base sm:text-lg transition-all transform hover:scale-105 shadow-xl shadow-orange-500/20 border border-orange-400/20">
           <i className="fas fa-redo mr-3"></i>
-          Retake Assessment
+          {t('assessment.retake')}
         </button>
         <div>
           <button onClick={downloadResults} className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base font-medium inline-flex items-center mt-2 group">
             <span className="p-2 rounded-full bg-gray-800 mr-2 group-hover:bg-gray-700 transition-colors"><i className="fas fa-download"></i></span>
-            Download Encrypted PDF
+            {t('assessment.download_pdf')}
           </button>
         </div>
       </div>
@@ -204,6 +207,7 @@ const ResultsSection = ({ algorithmResults, resultData, resetQuiz }) => {
 };
 
 const Assessment = () => {
+  const { t } = useTranslation();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -280,39 +284,39 @@ const Assessment = () => {
     let data;
     if (percentage <= 25) {
       data = {
-        level: 'Minimal to No Symptoms',
+        level: t('assessment.results.minimal.level'),
         icon: 'fas fa-check-circle text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]',
         className: 'result-minimal',
         borderClass: 'border-green-500/30',
-        message: 'Your responses across all algorithmic metrics suggest excellent cognitive resilience and minimal distress.',
-        recommendation: 'Continue maintaining your current emotional habits. Routine exercise, deep connections, and mindfulness are actively supporting your mental peace.',
+        message: t('assessment.results.minimal.message'),
+        recommendation: t('assessment.results.minimal.recommendation'),
       };
     } else if (percentage <= 50) {
       data = {
-        level: 'Mild Symptoms Detected',
+        level: t('assessment.results.mild.level'),
         icon: 'fas fa-exclamation-triangle text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]',
         className: 'result-mild',
         borderClass: 'border-yellow-500/30',
-        message: 'The algorithm detected mild signs of underlying stress or low mood, which is incredibly common but worth addressing.',
-        recommendation: 'Incorporate dedicated stress-reduction techniques. Focus on sleep hygiene and consider setting boundaries protecting your daily energy. Monitor if symptoms persist.',
+        message: t('assessment.results.mild.message'),
+        recommendation: t('assessment.results.mild.recommendation'),
       };
     } else if (percentage <= 75) {
       data = {
-        level: 'Moderate Risk Identified',
+        level: t('assessment.results.moderate.level'),
         icon: 'fas fa-exclamation-circle text-orange-400 drop-shadow-[0_0_15px_rgba(251,146,60,0.5)]',
         className: 'result-moderate',
         borderClass: 'border-orange-500/30',
-        message: 'Our weighted analysis correlates with moderate clinical symptoms. These markers are likely impacting your baseline quality of life significantly.',
-        recommendation: "It is strongly advised to consult with a licensed therapist or healthcare provider. Establishing a supportive coping framework now is a critical step forward.",
+        message: t('assessment.results.moderate.message'),
+        recommendation: t('assessment.results.moderate.recommendation'),
       };
     } else {
       data = {
-        level: 'Severe Alert',
+        level: t('assessment.results.severe.level'),
         icon: 'fas fa-heartbeat text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] animate-pulse',
         className: 'result-severe',
         borderClass: 'border-red-500/50 block-alert',
-        message: 'The assessment identifies severe markers intersecting depression, anxiety, or acute distress algorithms. Your mental well-being requires immediate attention.',
-        recommendation: "Please do not walk this path alone. Reach out to a mental health professional, a doctor, or a global crisis lifeline immediately. Your life and your relief matter.",
+        message: t('assessment.results.severe.message'),
+        recommendation: t('assessment.results.severe.recommendation'),
       };
     }
     setResultData(data);
@@ -332,8 +336,8 @@ const Assessment = () => {
     return (
       <div className="py-24 flex flex-col items-center justify-center min-h-[60vh] fade-in">
          <div className="w-16 h-16 border-4 border-gray-800 border-t-orange-500 rounded-full animate-spin mb-6 shadow-lg shadow-orange-500/20"></div>
-         <h2 className="text-2xl font-bold text-white tracking-widest uppercase mb-2">Connecting to API</h2>
-         <p className="text-gray-400 text-sm">Retrieving proven cognitive & clinical algorithms...</p>
+         <h2 className="text-2xl font-bold text-white tracking-widest uppercase mb-2">{t('assessment.connecting_api')}</h2>
+         <p className="text-gray-400 text-sm">{t('assessment.retrieving_algos')}</p>
       </div>
     );
   }
